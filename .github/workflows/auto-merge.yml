@@ -18,7 +18,7 @@ jobs:
         git config --global user.name "${GITHUB_USER}"
         git config --global user.email "${GITHUB_USER}@users.noreply.github.com"
       env: 
-        GITHUB_USER: github-actions
+        GITHUB_USER: github-actions[bot]
 
     - run: |
         git switch -c test
