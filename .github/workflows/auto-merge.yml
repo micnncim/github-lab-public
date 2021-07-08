@@ -24,6 +24,7 @@ jobs:
         git switch -c test
         git add hello.txt
         git commit -m 'Test'
+        git push origin test
   
     - run: |
         gh pr create \
