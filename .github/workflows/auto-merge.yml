@@ -33,6 +33,6 @@ jobs:
           --base 'master' \
           --head 'test'
 
-        gh pr merge test --auto --merge --squash
+        gh pr merge test --auto --squash
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
