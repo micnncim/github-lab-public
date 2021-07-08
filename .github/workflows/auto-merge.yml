@@ -12,6 +12,7 @@ jobs:
 
     - run: |
         echo "BRANCH=test/$(date "+%Y-%m-%d-%H-%M")" >> $GITHUB_ENV
+        echo "PULL_REQUEST=false" >> $GITHUB_ENV
 
     - run: echo "${BRANCH}" > hello.txt
 
@@ -39,6 +40,8 @@ jobs:
 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      if: ${{ "${PULL_REQUEST}" == "true" }}
     
     - run: |
         gh pr review "${BRANCH}" --approve
@@ -46,3 +49,5 @@ jobs:
 
       env:
         GITHUB_TOKEN: ${{ secrets.APPROVER_TOKEN }}
+
+      if: ${{ "${PULL_REQUEST}" == "true" }}
