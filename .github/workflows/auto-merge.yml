@@ -10,7 +10,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: echo 'hello' > hello.txt
+    - run: |
+        export BRANCH="$(date "+%Y-%m-%d-%H-%M")"
+
+    - run: echo 'hello world' > hello.txt
 
     - run: git status
     
@@ -21,18 +24,20 @@ jobs:
         GITHUB_USER: github-actions[bot]
 
     - run: |
-        git switch -c test
+        git switch -c "${BRANCH}"
         git add hello.txt
         git commit -m 'Test'
-        git push origin test
+        git push origin "${BRANCH}"
   
     - run: |
         gh pr create \
           --title 'test' \
           --body 'test' \
           --base 'master' \
-          --head 'test'
+          --head "${BRANCH}"
 
-        gh pr merge test --auto --squash
+        gh pr merge "${BRANCH}" --auto --squash
+        gh pr review "${BRANCH}" --approve
+        gh pr close "${BRANCH}" --delete-branch
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
