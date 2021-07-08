@@ -26,12 +26,7 @@ jobs:
         git commit -m 'Test'
   
     - run:
-        gh pr create \
-          --title 'test' \
-          --body 'test' \
-          --base 'master' \
-          --head 'test'
-
+        gh pr create --title 'test' --body 'test' --base 'master' --head 'test'
         gh pr merge test --auto --merge
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
