@@ -1,0 +1,35 @@
+name: auto-merge
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: echo 'hello' > hello.txt
+
+    - run: git status
+    
+    - run: |
+        git config --global user.name "${GITHUB_USER}"
+        git config --global user.email "${GITHUB_USER}@users.noreply.github.com"
+      env: 
+        GITHUB_USER: micnncim
+
+    - run: |
+        git switch -c test
+        git add hello.txt
+        git commit -m 'Test'
+  
+    - run:
+        gh pr create \
+            --title 'test' \
+            --body 'test' \
+            --base 'master' \
+            --head test
+
+        gh pr merge test --auto --merge
