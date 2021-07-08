@@ -34,7 +34,13 @@ jobs:
           --head test
 
         gh pr merge test --auto --squash
-        gh pr review test --approve
-        gh pr close test --delete-branch
+
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - run: |
+        gh pr review test --approve
+        gh pr close test --delete-branch
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.APPROVER_TOKEN. }}
