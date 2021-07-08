@@ -18,7 +18,7 @@ jobs:
         git config --global user.name "${GITHUB_USER}"
         git config --global user.email "${GITHUB_USER}@users.noreply.github.com"
       env: 
-        GITHUB_USER: micnncim
+        GITHUB_USER: github-actions
 
     - run: |
         git switch -c test
@@ -33,6 +33,6 @@ jobs:
           --base 'master' \
           --head 'test'
 
-        gh pr merge test --auto --merge
+        gh pr merge test --auto --merge --squash
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
