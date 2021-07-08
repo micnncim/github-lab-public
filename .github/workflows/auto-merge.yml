@@ -41,7 +41,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      if: ${{ env.PULL_REQUEST == "true" }}
+      if: ${{ env.PULL_REQUEST == 'true' }}
     
     - run: |
         gh pr review "${BRANCH}" --approve
@@ -50,4 +50,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.APPROVER_TOKEN }}
 
-      if: ${{ env.PULL_REQUEST == "true" }}
+      if: ${{ env.PULL_REQUEST == 'true' }}
