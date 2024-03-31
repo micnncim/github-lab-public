@@ -14,9 +14,34 @@ jobs:
     environment: ${{ matrix.environment }}
 
     steps:
-      - uses: actions/checkout@v4
-
       - run: |
           echo "Environment: ${{ matrix.environment }}"
           echo "vars.FOO: ${{ vars.FOO }}"
           echo "vars.BAR: ${{ vars.BAR }}"
+
+  foo:
+    runs-on: ubuntu-latest
+
+    environment: foo
+
+    outputs:
+      foo: ${{ steps.vars.outputs.foo }}
+
+    steps:
+      - id: vars
+        run: |
+          echo "foo=${{ vars.FOO }}" >> "$GITHUB_OUTPUT"
+
+  bar:
+    runs-on: ubuntu-latest
+
+    needs: foo
+
+    environment: bar
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: |
+          echo "vars.FOO (foo): ${{ needs.foo.outputs.foo }}"
+          echo "vars.FOO (bar): ${{ vars.FOO }}"
