@@ -1,0 +1,22 @@
+name: GitHub Environment
+
+on:
+  push:
+
+jobs:
+  environment:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        environment: [foo, bar]
+
+    environment: ${{ matrix.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: |
+          echo "Environment: ${{ matrix.environment }}"
+          echo "vars.FOO: ${{ vars.FOO }}"
+          echo "vars.BAR: ${{ vars.BAR }}"
